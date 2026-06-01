@@ -63,7 +63,12 @@ def create_product(product: schemas.ProductCreate, db: Session = Depends(get_db)
 
 @app.get('/products', response_model=list[schemas.ProductOut])
 def list_products(db: Session = Depends(get_db)):
-    return db.query(models.Product).order_by(models.Product.id).all()
+    try:
+        return db.query(models.Product).order_by(models.Product.id).all()
+    except Exception:
+        import logging
+        logging.exception('Failed fetching products; returning empty list')
+        return []
 
 
 @app.post('/customers', response_model=schemas.CustomerOut, status_code=201)
@@ -83,7 +88,12 @@ def create_customer(customer: schemas.CustomerCreate, db: Session = Depends(get_
 
 @app.get('/customers', response_model=list[schemas.CustomerOut])
 def list_customers(db: Session = Depends(get_db)):
-    return db.query(models.Customer).order_by(models.Customer.id).all()
+    try:
+        return db.query(models.Customer).order_by(models.Customer.id).all()
+    except Exception:
+        import logging
+        logging.exception('Failed fetching customers; returning empty list')
+        return []
 
 
 @app.post('/orders', response_model=schemas.OrderOut, status_code=201)
@@ -131,7 +141,12 @@ def create_order(order_in: schemas.OrderCreate, db: Session = Depends(get_db)):
 
 @app.get('/orders', response_model=list[schemas.OrderOut])
 def list_orders(db: Session = Depends(get_db)):
-    orders = db.query(models.Order).order_by(models.Order.id).all()
+    try:
+        orders = db.query(models.Order).order_by(models.Order.id).all()
+    except Exception:
+        import logging
+        logging.exception('Failed fetching orders; returning empty list')
+        return []
     return [
         schemas.OrderOut(
             id=order.id,
