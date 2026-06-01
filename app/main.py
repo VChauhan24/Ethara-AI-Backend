@@ -12,7 +12,8 @@ app = FastAPI(title='Product Customer Order API')
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*'],
+    allow_origins=[],  # use regex instead to echo Origin header
+    allow_origin_regex=r".*",
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],
