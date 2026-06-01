@@ -12,13 +12,13 @@ app = FastAPI(title='Product Customer Order API')
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[],  # use regex instead to echo Origin header
-    allow_origin_regex=r".*",
+    allow_origins=[
+        "https://ethara-ai-frontend-vtpw.vercel.app",
+    ],
     allow_credentials=True,
-    allow_methods=['*'],
-    allow_headers=['*'],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
-
 import logging
 logging.getLogger().info('CORS middleware configured: allow_origin_regex=.* allow_credentials=True')
 
