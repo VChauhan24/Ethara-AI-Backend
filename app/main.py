@@ -19,6 +19,9 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
+import logging
+logging.getLogger().info('CORS middleware configured: allow_origin_regex=.* allow_credentials=True')
+
 
 @app.on_event("startup")
 def create_tables_on_startup():
